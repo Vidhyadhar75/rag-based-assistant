@@ -2,11 +2,6 @@ import streamlit as st
 from huggingface_hub import InferenceClient
 from sentence_transformers import SentenceTransformer
 import numpy as np
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
 
 # Load sentence transformer
 sent_transformer = SentenceTransformer('sentence-transformers/all-MiniLM-l6-v2')
@@ -20,9 +15,8 @@ def load_data():
 
 encoded_chunks = load_data()
 
-# Initialize Hugging Face Inference Client with API key in code
-client = InferenceClient(api_key=os.environ["HF_API_KEY"])
-
+# Use secret key from Streamlit secrets
+client = InferenceClient(api_key=st.secrets["HF_API_KEY"])
 
 # Context retrieval
 def find_relevant_context(query):
